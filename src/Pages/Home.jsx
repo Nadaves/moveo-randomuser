@@ -1,14 +1,22 @@
 import React from "react";
 import UsersTable from "../Components/Table";
-import Navbar from "../Components/Navbar";
+import Appbar from "../Components/Navbar";
 import "./Home.css";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justifcy-content: center;
+  align-items: center;
+`;
 
 function Home() {
   return (
-    <div className="Container">
-      <Navbar />
+    <Container>
+      <Appbar />
       <UsersTable />
-    </div>
+    </Container>
   );
 }
 

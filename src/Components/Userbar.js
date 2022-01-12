@@ -8,13 +8,13 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 95%;
   text-align: center;
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 768px) {
     width: 80%;
   }
   margin-bottom: 1em;
 `;
 
-export default function Appbar() {
+export default function Userbar() {
   return (
     <Container>
       <Box sx={{ flexGrow: 1 }}>
@@ -25,7 +25,7 @@ export default function Appbar() {
               component="div"
               sx={{ flexGrow: 1, color: "grey.900" }}
             >
-              All users
+              User Details
             </Typography>
           </Toolbar>
         </AppBar>
