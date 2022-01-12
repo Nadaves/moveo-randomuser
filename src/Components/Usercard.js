@@ -7,9 +7,12 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Container = styled.div`
-  margin-bottom: 1em;
   width: 100%;
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 768px) {
+  }
 `;
 export default function Usercard() {
   const user = useSelector((state) => state.user);
@@ -18,10 +21,9 @@ export default function Usercard() {
   }
   return (
     <Container>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card>
         <CardMedia
           component="img"
-          height="200"
           image={user.value.picture.large}
           alt={user.value.username}
         />

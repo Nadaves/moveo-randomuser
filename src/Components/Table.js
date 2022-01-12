@@ -63,7 +63,7 @@ const headCells = [
   {
     id: "name",
     disablePadding: false,
-    label: "Name",
+    label: "Full name",
   },
   {
     id: "email",
@@ -82,35 +82,43 @@ const headCells = [
   },
 ];
 
-function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
+function EnhancedTableHead({ order, orderBy, onRequestSort }) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
+
+  const Label = ({ headCell }) => (
+    <>
+      {headCell.label}
+      {orderBy === headCell.id ? (
+        <Box component="span" sx={visuallyHidden}>
+          {order === "desc" ? "sorted descending" : "sorted ascending"}
+        </Box>
+      ) : null}
+    </>
+  );
   return (
     <TableHead>
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            width={"20"}
             scope={"col"}
             align={"left"}
             padding={"normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
+            {headCell.label !== "Picture" ? (
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                <Label headCell={headCell} />
+              </TableSortLabel>
+            ) : (
+              <Label headCell={headCell} />
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -133,7 +141,7 @@ export default function EnhancedTable() {
         setRows(
           res.data.results.map((user) => ({
             picture: user.picture,
-            name: user.name.first,
+            name: user.name.first + " " + user.name.last,
             email: user.email,
             gender: user.gender,
             age: user.dob.age,
@@ -160,21 +168,15 @@ export default function EnhancedTable() {
   };
 
   function capitalizeTxt(txt) {
-    return txt.charAt(0).toUpperCase() + txt.slice(1); 
+    return txt.charAt(0).toUpperCase() + txt.slice(1);
   }
-  
+
   return (
     <Container>
       <Box>
-        <Paper>
+        <Paper sx={{ overflow: "auto" }}>
           <TableContainer>
-            <Table
-              sx={{
-                minWidth: 250,
-              }}
-              aria-labelledby="tableTitle"
-              size={"large"}
-            >
+            <Table aria-labelledby="tableTitle" size={"large"}>
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}

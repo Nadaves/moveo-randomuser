@@ -2,6 +2,7 @@ import React from "react";
 import Usercard from "../Components/Usercard";
 import Map from "../Components/Map";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import Userbar from "../Components/Userbar";
 import styled from "styled-components";
 
@@ -17,14 +18,21 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 90%;
+  padding: 20px;
   @media screen and (min-width: 768px) {
     flex-direction: row;
-
+    justify-content: center;
+    align-items: center;
     width: 80%;
+    stretch: column;
   }
 `;
 
 function User() {
+  const { pathname } = useLocation();
+  const username = pathname.split(":")[1];
+  console.log(username);
   const user = useSelector((state) => state.user);
   return (
     <Container>
